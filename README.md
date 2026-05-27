@@ -1,66 +1,43 @@
-# AI-Spam-Classifier-Webapp
-Beginner-friendly academic mini-project for detecting SMS spam using Python, NLP, Machine Learning, and Streamlit.
+# 🛡️ Enterprise AI Spam Classification Dashboard
 
-Features
-Manual message prediction
-CSV/TXT file upload prediction
-Spam/Ham classification
-Spam probability and risk meter
-Suspicious keyword highlighting
-Prediction history saved to history.csv
-Model comparison for Naive Bayes, Logistic Regression, and SVM
-Evaluation metrics and confusion matrix
-Dataset
-Use the SMS Spam Collection Dataset from Kaggle:
+An end-to-end Natural Language Processing (NLP) and Machine Learning application that classifies text messages into **Spam** or **Ham (Legitimate)**. This project implements a decoupled architecture to evaluate the structural and runtime performance trade-offs between **Statistical Inference (Multinomial Naive Bayes)** and **Ensemble Learning (Random Forest)**.
 
-https://www.kaggle.com/datasets/uciml/sms-spam-collection-dataset
+---
 
-Place the dataset file as:
+## 🚀 Key Technical Features
+* **Decoupled Architecture:** Separates the heavy model training phase (`train.py`) from the user interface rendering engine (`app.py`), dropping server initialization latency to sub-milliseconds.
+* **Dual-Engine Live Comparison:** Evaluates custom text inputs through two completely distinct mathematical algorithms simultaneously, displaying live predictions, confidence percentages, and execution speed (inference latency in ms).
+* **Class Imbalance Mitigation:** Combats the inherent class distribution skewness (~86% Ham, ~14% Spam) using stratified sampling and dynamic class-weight balancing configurations.
+* **Production-Ready UI:** Implements a fully interactive dashboard built with the Streamlit framework.
 
-spam.csv
-The Kaggle dataset usually contains v1 for labels and v2 for messages.
+---
 
-Folder Structure
-spam_detection_project/
-│
-├── app.py
-├── model_training.py
-├── preprocess.py
-├── requirements.txt
-├── README.md
-├── spam.csv
-├── saved_model.pkl
-├── vectorizer.pkl
-└── history.csv
-saved_model.pkl, vectorizer.pkl, evaluation_results.json, confusion_matrix.png, and history.csv are generated after training or using the app.
+## 📊 System Architecture Pipeline
 
-Setup
-Install dependencies:
+1. **Data Ingestion:** Sourced from the verified Kaggle SMS Spam Dataset (compiled with `latin-1` structural encoding).
+2. **Text Preprocessing:** * Case folding (lowercasing global string streams).
+   * Regex parsing to strip URLs, HTML tags, and numeric anomalies.
+   * Universal punctuation stripping.
+   * Stopword filtering using the NLTK corpus.
+   * Morphological normalization via the Porter Stemmer algorithm.
+3. **Feature Engineering:** Vectorization using Term Frequency-Inverse Document Frequency (TF-IDF) with integrated unigram and bigram ranges (`ngram_range=(1, 2)`).
+4. **Serialization:** Freezing vectorizer features and algorithmic decision weights into a unified binary payload bundle (`model_bundle.pkl`).
 
-pip install -r requirements.txt
-Train the machine learning models:
+---
 
-python model_training.py
-Run the Streamlit app:
+## 🛠️ Tech Stack & Dependencies
+* **Core Language:** Python
+* **Data Scaffolding:** Pandas, NumPy
+* **Machine Learning & NLP:** Scikit-Learn, NLTK
+* **Web Framework:** Streamlit
+* **Deployment/Sourcing Track:** Google Colab, GitHub Command Workflow
 
-streamlit run app.py
-How It Works
-The text is converted to lowercase.
-Punctuation is removed.
-Text is tokenized into words.
-Stopwords are removed using NLTK.
-Words are stemmed using Porter Stemmer.
-TF-IDF converts cleaned text into numerical features.
-Naive Bayes, Logistic Regression, and SVM are trained and compared.
-The best model is selected automatically using F1-score.
-The Streamlit app loads the saved model and vectorizer for prediction.
-Risk Meter
-The app uses the model's spam probability:
+---
 
-0-40%: Safe
-40-70%: Suspicious
-70-100%: Spam
-Notes
-Keep spam.csv in the same folder as the Python files.
-If model files are missing, run python model_training.py.
-Uploaded CSV files should contain a message column such as message, text, sms, or v2
+## 📂 Project Directory Structure
+```text
+├── AI_Spam_Classifier.ipynb   # Interactive exploratory workflow from Google Colab
+├── train.py                  # Standalone data cleaning and model training pipeline
+├── app.py                    # Multi-column Streamlit web application layout
+├── requirements.txt          # Explicit environmental dependency registry
+└── README.md                 # System documentation portal
